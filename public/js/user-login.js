@@ -1,4 +1,5 @@
 const loginForm = document.querySelector('.loginForm');
+const statusText = document.querySelector('.statusText');
 
 const login = async user => {
     const res = await fetch('http://localhost/user-login', {
@@ -14,6 +15,25 @@ const login = async user => {
     const result = await(res.json());
     
     console.log(result);
+    
+    // feedback til bruker
+    statusText.innerText = result.status;
+    
+    // fjern gamle classes fra bruker feedback
+    const classCodes = ['userErr', 'serverErr', 'ok'];
+    
+    classCodes.forEach(classCode => {
+        statusText.classList.remove(classCode);
+    });
+
+    // legg til ny status class
+    if (result.code === 'userErr') {
+        statusText.classList.add('userErr');
+    } else if (result.code === 'serverErr') {
+        statusText.classList.add('serverErr');
+    } else {
+        statusText.classList.add('ok');
+    };
 };
 
 loginForm.addEventListener('submit', e => {
@@ -21,7 +41,6 @@ loginForm.addEventListener('submit', e => {
 
     const user = {
         email: loginForm.email.value,
-        username: loginForm.username.value,
         password: loginForm.password.value
     };
 

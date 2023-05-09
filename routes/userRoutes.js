@@ -6,5 +6,6 @@ const router = Router();
 
 // routes
 router.post('/user-create', userController.user_create);
+router.post('/user-login', userController.user_login);
 
 module.exports = router;

@@ -84,3 +84,39 @@ module.exports.user_create = async (req, res) => {
         };
     };
 };
+
+module.exports.user_login = async (req, res) => {
+    const user = req.body.user;
+
+    // finn brukeren
+    const dbUser = await User.findOne({ email: user.email });
+
+    if (dbUser) {
+        const auth = await bcrypt.compare(user.password, dbUser.password);
+
+        if (auth) {
+            const token = createToken(dbUser._id);
+
+            res.cookie('jwt', token, {
+                sameSite: 'strict',
+                httpOnly: true,
+                maxAge: maxAge * 1000
+            });
+
+            res.status(200).send({
+                status: 'Du har logget inn',
+                code: 'ok'
+            });
+        } else {
+            res.status(400).send({
+                status: 'Feil passord',
+                code: 'userErr'
+            });
+        }
+    } else {
+        res.status(400).send({
+            status: `Kunne ikke finne en bruker med mailen "${user.email}"`,
+            code: 'userErr'
+        });
+    };
+};
