@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 // environment variables
 const { dbUser, dbPass } = require('./config.json');
 const PORT = 80;
-const DB_URI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.vnz2jh4.mongodb.net/testDatabase`;
+const DB_URI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.vnz2jh4.mongodb.net/chinpokomonDatabase`;
 
 // routes
 const MAIN_ROUTES = require('./routes/mainRoutes');
+const USER_ROUTES = require('./routes/userRoutes');
 
 // server
 const server = express();
@@ -29,6 +30,7 @@ mongoose.connect(DB_URI, { useNewUrlParser : true, useUnifiedTopology : true })
 
 // routes
 server.use(MAIN_ROUTES);
+server.use(USER_ROUTES);
 
 // 404
 server.use((req, res) => res.status(404).render('404', { title: 'Page not found' }));

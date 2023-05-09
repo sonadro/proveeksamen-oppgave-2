@@ -1,4 +1,5 @@
 const createUserForm = document.querySelector('.createUserForm');
+const statusText = document.querySelector('.statusText');
 
 const createUser = async user => {
     const res = await fetch('http://localhost/user-create', {
@@ -13,9 +14,36 @@ const createUser = async user => {
     
     const result = await(res.json());
     
-    console.log(result);
+    // feedback til bruker
+    statusText.innerText = result.status;
+    
+    // fjern gamle classes fra bruker feedback
+    const classCodes = ['userErr', 'serverErr', 'ok'];
+    
+    classCodes.forEach(classCode => {
+        statusText.classList.remove(classCode);
+    });
+
+    // legg til ny status class
+    if (result.code === 'userErr') {
+        statusText.classList.add('userErr');
+    } else if (result.code === 'serverErr') {
+        statusText.classList.add('serverErr');
+    } else {
+        statusText.classList.add('ok');
+    };
+
+    statusText.classList.remove('hidden');
 };
 
 createUserForm.addEventListener('submit', e => {
     e.preventDefault();
+
+    const user = {
+        email: createUserForm.email.value,
+        username: createUserForm.username.value,
+        password: createUserForm.password.value
+    };
+
+    createUser(user);
 });

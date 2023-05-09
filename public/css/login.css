@@ -14,3 +14,15 @@ form * {
     margin: 5px;
     padding: 5px;
 }
+
+.userErr {
+    color: red;
+}
+
+.serverErr {
+    color: orange;
+}
+
+.ok {
+    color: #00af00;
+}
