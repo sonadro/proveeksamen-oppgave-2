@@ -8,9 +8,9 @@ const { jwtSecret } = require('../config.json');
 // jwt
 const maxAge = 60 * 60 * 24 * 3;
 const createToken = id => {
-    return jwt.sign({ id }, jwtSecret), {
+    return jwt.sign({ id }, jwtSecret, {
         expiresIn: maxAge
-    };
+    });
 };
 
 // controller
@@ -39,7 +39,7 @@ module.exports.user_create = async (req, res) => {
         const usernameExists = await User.findOne({ username: user.username });
 
         if (emailExists) {
-            console.log(emailExists);
+            console.log(emailExists._id.toString());
             res.status(400).send({
                 status: `Emailen "${user.email}" er allerede i bruk!`,
                 code: 'userErr'
@@ -57,11 +57,12 @@ module.exports.user_create = async (req, res) => {
 
             try {
                 // lagre dokumentet
-                const document = new User(user);
-                document.save();
+                const document = await User.create(user);
 
                 // logg brukeren inn
-                const token = createToken(document._id);
+                const token = createToken(document._id.toString());
+
+                console.log(token);
 
                 res.cookie('jwt', token, {
                     sameSite: 'strict',
@@ -95,7 +96,9 @@ module.exports.user_login = async (req, res) => {
         const auth = await bcrypt.compare(user.password, dbUser.password);
 
         if (auth) {
-            const token = createToken(dbUser._id);
+            const token = createToken(dbUser._id.toString());
+
+            console.log(token);
 
             res.cookie('jwt', token, {
                 sameSite: 'strict',

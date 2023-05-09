@@ -13,7 +13,11 @@
     <nav>
         <ul>
             <li class="leftNav"><p>Logo</p></li>
-            <li class="middleNav"><h1>Chinpokomon</h1></li>
-            <li class="rightNav"><a href="/login">Logg inn</a></li>
+            <li class="middleNav"><h1><a href="/">Chinpokomon</a></h1></li>
+            <% if (locals.loggedIn === false) { %>
+                <li class="rightNav"><a href="/login">Logg inn</a></li>
+            <% } else if (locals.loggedIn === true) { %>
+                <li class="rightNav"><a href="/logout">Logg ut</a></li>
+            <% } %>
         </ul>
     </nav><br><br><br>
