@@ -10,3 +10,8 @@ module.exports.login_get = (req, res) => {
 module.exports.createUser_get = (req, res) => {
     res.render('createUser', { title: 'Opprett bruker' });
 };
+
+module.exports.userHome_get = (req, res) => {
+    const username = req.params.username;
+    res.render('userHome', { title: 'Brukerpanel', username });
+};

@@ -128,3 +128,40 @@ module.exports.user_logout = (req, res) => {
     res.cookie('jwt', "", {maxAge: 1});
     res.redirect("/");
 };
+
+module.exports.user_findUserhome = async (req, res) => {
+    const username = req.body.username;
+    const token = req.cookies.jwt;
+
+    // check if token
+    if (token) {
+        // find user
+        const dbUser = await User.findOne({ username });
+
+        // check jwt
+        jwt.verify(token, jwtSecret, (err, decodedToken) => {
+            console.log('jwtauththing');
+            console.log(decodedToken.id);
+            console.log(dbUser._id.toString());
+            if (err) {
+                // kick out 401
+                console.error(err);
+            } else {
+                // check if jwt id matches the url users id
+                if (decodedToken.id === dbUser._id.toString()) {
+                    // user authorized
+                    console.log('user authorized');
+                } else {
+                    // user forbidden
+                    console.log('user forbidden 403');
+                };
+            };
+        });
+    } else {
+        // user doesn't have token
+        res.status(401).send({
+            statust: 'Du må være logget inn for å se denne siden',
+            code: 'userErr'
+        });
+    };
+};

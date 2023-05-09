@@ -1,6 +1,7 @@
 // packages & imports
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config.json');
+const User = require('../models/user');
 
 // logged in check
 const loggedInCheck = (req, res, next) => {
@@ -8,7 +9,7 @@ const loggedInCheck = (req, res, next) => {
 
     // sjekk om jwt er gyldig
     if (token) {
-        jwt.verify(token, jwtSecret, (err, decodedToken) => {
+        jwt.verify(token, jwtSecret, async (err, decodedToken) => {
             if (err) {
                 // ugyldig token
                 console.error(err);
@@ -16,6 +17,9 @@ const loggedInCheck = (req, res, next) => {
                 next();
             } else {
                 // logget inn
+                const user = await User.findOne({ _id: decodedToken.id });
+                console.log(user);
+                res.locals.username = user.username;
                 res.locals.loggedIn = true;
                 next();
             };

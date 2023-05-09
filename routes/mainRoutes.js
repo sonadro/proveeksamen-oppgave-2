@@ -9,5 +9,6 @@ const router = Router();
 router.get('/', loggedInCheck, mainController.home_get);
 router.get('/login', loggedInCheck, mainController.login_get);
 router.get('/create', loggedInCheck, mainController.createUser_get);
+router.get('/home/:username', loggedInCheck, mainController.userHome_get);
 
 module.exports = router;

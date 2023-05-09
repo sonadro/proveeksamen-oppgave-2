@@ -18,6 +18,7 @@
                 <li class="rightNav"><a href="/login">Logg inn</a></li>
             <% } else if (locals.loggedIn === true) { %>
                 <li class="rightNav"><a href="/logout">Logg ut</a></li>
+                <li class="rightNav"><p><%= locals.username %></p></li>
             <% } %>
         </ul>
     </nav><br><br><br>

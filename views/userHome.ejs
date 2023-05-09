@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+
+    <div class="main">
+        <h2>Brukerside - <%= username %></h2>
+    </div>
+
+    <script>
+        const username = "<%= username %>";
+    </script>
+
+    <script src="/js/userHome.js" defer></script>
+
+<%- include('partials/footer') %>
