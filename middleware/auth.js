@@ -50,7 +50,6 @@ const userHomeCheck = async (req, res, next) => {
                 } else {
                     res.redirect(`/home/${dbUser.username}`);
                 };
-                next();
             };
         });
     } else {
