@@ -68,7 +68,8 @@ form.addEventListener('submit', e => {
         ability2: form.ability2.value,
         ability3: form.ability3.value,
         picture: img,
-        authorName: username
+        authorName: username,
+        createdAt: Date.now()
     };
 
     uploadChinpokomon(chinpokomon);

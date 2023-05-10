@@ -10,9 +10,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String
-    },
-    created_chinpokomons: {
-        type: Array
     }
 });
 

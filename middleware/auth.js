@@ -18,7 +18,6 @@ const loggedInCheck = (req, res, next) => {
             } else {
                 // logget inn
                 const user = await User.findOne({ _id: decodedToken.id });
-                console.log(user);
                 res.locals.username = user.username;
                 res.locals.loggedIn = true;
                 next();
@@ -58,5 +57,19 @@ const userHomeCheck = async (req, res, next) => {
     };
 };
 
+const userPageCheck = async (req, res, next) => {
+    const username = req.params.username;
+
+    // sjekk om brukeren eksisterer
+    const userExists = await User.findOne({ username });
+
+    if (userExists) {
+        next();
+    } else {
+        // hvis brukeren ikke eksisterer
+        res.redirect(`/nouser/${username}`);
+    };
+};
+
 // export functions
-module.exports = { loggedInCheck, userHomeCheck };
+module.exports = { loggedInCheck, userHomeCheck, userPageCheck };

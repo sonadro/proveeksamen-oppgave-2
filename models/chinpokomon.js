@@ -19,6 +19,9 @@ const chinpokomonSchema = new mongoose.Schema({
     },
     authorName: {
         type: String
+    },
+    createdAt: {
+        type: Number
     }
 });
 
