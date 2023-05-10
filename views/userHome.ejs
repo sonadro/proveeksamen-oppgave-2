@@ -2,11 +2,26 @@
 
     <div class="main">
         <h2>Brukerside - <%= username %></h2>
-    </div>
 
-    <script>
-        const username = "<%= username %>";
-    </script>
+        <form class="createChinpokomon">
+            <label for="name">Navn:</label>
+            <input type="text" name="name" id="name">
+            
+            <label for="image">Bilde:</label>
+            <input type="image" name="image" id="image">
+
+            <label for="ability1">Evne 1:</label>
+            <input type="text" name="ability1" id="ability1">
+
+            <label for="ability2">Evne 2:</label>
+            <input type="text" name="ability2" id="ability2">
+
+            <label for="ability3">Evne 3:</label>
+            <input type="text" name="ability3" id="ability3">
+
+            <button type="submit">Opprett Chinpokomon</button>
+        </form>
+    </div>
 
     <script src="/js/userHome.js" defer></script>
 
