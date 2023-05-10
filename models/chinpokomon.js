@@ -15,7 +15,7 @@ const chinpokomonSchema = new mongoose.Schema({
         type: String
     },
     picture: {
-        type: Buffer
+        type: String
     },
     authorName: {
         type: String

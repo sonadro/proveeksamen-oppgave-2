@@ -18,7 +18,8 @@ const server = express();
 
 // middleware
 server.use(express.static('public'));
-server.use(express.json());
+server.use(express.json({ limit: '6mb' }));
+server.use(express.urlencoded({ limit: '6mb' }));
 server.use(cookieParser());
 
 // view engine
