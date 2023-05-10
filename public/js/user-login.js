@@ -2,7 +2,7 @@ const loginForm = document.querySelector('.loginForm');
 const statusText = document.querySelector('.statusText');
 
 const login = async user => {
-    const res = await fetch('http://localhost/user-login', {
+    const res = await fetch('/user-login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

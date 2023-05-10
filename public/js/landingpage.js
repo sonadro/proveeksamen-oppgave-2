@@ -1,7 +1,7 @@
 const displayDiv = document.querySelector('.chinpokomons');
 
 const fetchChinpokomons = async () => {
-    const res = await fetch('http://localhost/landingpage-read', {
+    const res = await fetch('/landingpage-read', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -2,7 +2,7 @@ const createUserForm = document.querySelector('.createUserForm');
 const statusText = document.querySelector('.statusText');
 
 const createUser = async user => {
-    const res = await fetch('http://localhost/user-create', {
+    const res = await fetch('/user-create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

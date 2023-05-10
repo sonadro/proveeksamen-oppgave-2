@@ -40,7 +40,7 @@ dropZone.addEventListener('drop', e => {
 
 // send chinpokomon til backend
 const uploadChinpokomon = async chinpokomon => {
-    const res = await fetch('http://localhost/chinpokomon-create', {
+    const res = await fetch('/chinpokomon-create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ form.addEventListener('submit', e => {
 });
 
 const getChinpokomon = async () => {
-    const res = await fetch('http://localhost/chinpokomon-read', {
+    const res = await fetch('/chinpokomon-read', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
