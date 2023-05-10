@@ -1,5 +1,8 @@
 <%- include('partials/header') %>
 
+    <!-- css -->
+    <link rel="stylesheet" href="/css/userHome.css">
+
     <div class="main">
         <h2>Brukerside - <%= username %></h2>
 
@@ -8,7 +11,7 @@
             <input type="text" name="name" id="name">
             
             <label for="image">Bilde:</label>
-            <input type="image" name="image" id="image">
+            <div name="image" id="image"></div>
 
             <label for="ability1">Evne 1:</label>
             <input type="text" name="ability1" id="ability1">
@@ -23,6 +26,7 @@
         </form>
     </div>
 
+    <!-- scripts -->
     <script src="/js/userHome.js" defer></script>
 
 <%- include('partials/footer') %>
