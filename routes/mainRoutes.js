@@ -7,8 +7,8 @@ const router = Router();
 
 // routes
 router.get('/', loggedInCheck, mainController.home_get);
-router.get('/login', loggedInCheck, mainController.login_get);
-router.get('/create', loggedInCheck, mainController.createUser_get);
+router.get('/sign-in', loggedInCheck, mainController.login_get);
+router.get('/sign-up', loggedInCheck, mainController.createUser_get);
 
 // user pages
 router.get('/user/:username', loggedInCheck, userPageCheck, mainController.userPage_get);

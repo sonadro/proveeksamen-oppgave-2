@@ -1,4 +1,4 @@
-const displayDiv = document.querySelector('.chinpokomons');
+const displayDiv = document.querySelector('.chinpokomonGrid');
 
 const getUserChinpokomons = async () => {
     const location = window.location.toString();
@@ -16,15 +16,23 @@ const getUserChinpokomons = async () => {
     
     const result = await(res.json());
 
-    result.userChinpokomons.forEach(chinpokomon => {
+    const parsed = JSON.parse(result.chinpokomons);
+
+    parsed.forEach(chinpokomon => {
         const template = `
-            <div id="${chinpokomon._id}">
-                <h3>${chinpokomon.name}</h3>
-                <p>${chinpokomon.ability1}</p>
-                <p>${chinpokomon.ability2}</p>
-                <p>${chinpokomon.ability3}</p>
-                <p>${chinpokomon.authorName}</p>
+        <div class="chinpokomonCard">
+            <div class="nameGrid"><h3>${chinpokomon.name}</h3></div>
+            <div class="imgGrid"><div style="background-image: url(${chinpokomon.picture});"></div></div>
+            <div class="abilityGrid">
+                <h2>Abilities:</h2>
+                <ul>
+                    <li>1 - ${chinpokomon.ability1}</li>
+                    <li>2 - ${chinpokomon.ability2}</li>
+                    <li>3 - ${chinpokomon.ability3}</li>
+                </ul>
             </div>
+            <p class="authorName">${chinpokomon.authorName}</p>
+        </div>
         `;
 
         displayDiv.innerHTML += template;

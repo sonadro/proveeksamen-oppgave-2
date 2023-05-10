@@ -33,6 +33,7 @@ const login = async user => {
         statusText.classList.add('serverErr');
     } else {
         statusText.classList.add('ok');
+        window.location = '/home';
     };
 };
 

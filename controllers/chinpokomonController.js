@@ -33,10 +33,8 @@ module.exports.chinpokomon_landingPage_read = async (req, res) => {
         }
       ]);
 
-    console.log(chinpokomons);
-
     res.status(200).send({
-        chinpokomons
+        chinpokomons: JSON.stringify(chinpokomons)
     });
 };
 
@@ -57,7 +55,7 @@ module.exports.chinpokomon_user_get = async (req, res) => {
 
     if (userChinpokomons.length) {
         res.status(200).send({
-            userChinpokomons
+            chinpokomons: JSON.stringify(userChinpokomons)
         });
     } else {
         res.status(200).send({

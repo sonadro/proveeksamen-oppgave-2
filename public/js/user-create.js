@@ -31,6 +31,7 @@ const createUser = async user => {
         statusText.classList.add('serverErr');
     } else {
         statusText.classList.add('ok');
+        window.location = '/home';
     };
 
     statusText.classList.remove('hidden');

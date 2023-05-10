@@ -7,11 +7,21 @@ module.exports.home_get = (req, res) => {
 };
 
 module.exports.login_get = (req, res) => {
-    res.render('login', { title: 'Logg inn' });
+    if (res.locals.loggedIn === false) {
+        res.render('login', { title: 'Logg inn' });
+    } else {
+        // hvis bruker er logget inn, redirect til hjemmeside
+        res.redirect('/');
+    };
 };
 
 module.exports.createUser_get = (req, res) => {
-    res.render('createUser', { title: 'Opprett bruker' });
+    if (res.locals.loggedIn === false) {
+        res.render('createUser', { title: 'Opprett bruker' });
+    } else {
+        // hvis bruker er logget inn, redirect tl hjemmeside
+        res.redirect('/');
+    };
 };
 
 module.exports.userHome_get = (req, res) => {

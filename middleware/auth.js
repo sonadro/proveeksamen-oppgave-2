@@ -13,13 +13,21 @@ const loggedInCheck = (req, res, next) => {
             if (err) {
                 // ugyldig token
                 console.error(err);
+                res.cookie('jwt', '', { maxAge: 1 });
                 res.locals.loggedIn = false;
                 next();
             } else {
                 // logget inn
                 const user = await User.findOne({ _id: decodedToken.id });
-                res.locals.username = user.username;
-                res.locals.loggedIn = true;
+
+                if (user) {
+                    res.locals.username = user.username;
+                    res.locals.loggedIn = true;
+                } else {
+                    // brukeren eksisterer ikke
+                    res.cookie('jwt', '', { maxAge: 1 });
+                    res.locals.loggedIn = false;
+                };
                 next();
             };
         });
@@ -40,7 +48,8 @@ const userHomeCheck = async (req, res, next) => {
             if (err) {
                 // ugyldig token
                 console.error(err);
-                res.redirect('/login');
+                res.cookie('jwt', '', { maxAge: 1 });
+                res.redirect('/sign-in');
             } else {
                 // bruker er logget inn
                 const dbUser = await User.findOne({ _id: decodedToken.id });
@@ -53,7 +62,7 @@ const userHomeCheck = async (req, res, next) => {
         });
     } else {
         // bruker er ikke logget inn, redirect til logg inn side
-        res.redirect('/login');
+        res.redirect('/sign-in');
     };
 };
 
