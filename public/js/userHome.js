@@ -1,40 +1,76 @@
+const form = document.querySelector('.createGrid');
+const feedback = document.querySelector('.feedback');
 const dropZone = document.querySelector('#image');
-const form = document.querySelector('.createChinpokomon');
+const hideMe = document.querySelector('.hideMe');
 
-// file size limit (1048576 = 1mb)
+// maks filstørrelse (1048576 = 1mb)
 const fileSizeLimit = 5 * 1048576;
 
-// image
+// bilde brukeren kan laste opp
 let img;
 
 dropZone.addEventListener('dragover', e => {
     e.preventDefault();
 });
 
+const showFeedback = (status, code) => {
+    // user feedback ------------------
+
+    // fjern gamle status classes fra feedback
+    const statusClasses = ['userErr', 'serverErr', 'ok'];
+    statusClasses.forEach(statusClass => {
+        feedback.classList.remove(statusClass);
+    });
+
+    // vis status tekst
+    feedback.innerText = status;
+
+    // legg til statuskode class & vis feedback
+    feedback.classList.add(code);
+    feedback.classList.remove('hidden');
+
+    // hvis ok, refresh siden
+    if (code === 'ok') {
+        // reset form verdier
+        form.name.value = null;
+        form.ability1.value = null;
+        form.ability2.value = null;
+        form.ability3.value = null;
+        window.location.reload();
+    };
+}
+
+// hvis brukeren slipper et bilde over dropsonen
 dropZone.addEventListener('drop', e => {
     e.preventDefault();
 
-    // clear previous image
+    // fjern forrige bilde når nytt bilde lastes opp
     img = null;
 
-    // check file limit
+    // hent ut filen
     let file = e.dataTransfer.files[0];
-    console.log(file);
+
+    // sjekk om filen er under maksimal grensen
     if (file.size > fileSizeLimit) {
-        console.log('your file is too big');
+        // feedback til bruker
+        showFeedback('Maksimal filstørrelse er 5mb', 'userErr');
+        dropZone.style.backgroundImage = '';
+
+        // slett filen brukeren lastet opp fra variabelen
         file = null;
     } else {
+        // les av filen
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
         reader.addEventListener('loadend', () => {
+            // når filen er ferdig å lese, lagre den i variabelen som blir lastet opp når formen blir submittet
             img = reader.result;
+            hideMe.classList.add('hidden');
 
-            console.log(img);
-
+            // sett bakgrunnsbildet til dropsonen så brukeren kan se bildet de lastet opp
             dropZone.style.backgroundImage = `url('${img}')`;
         });
-        console.log('thank you for saving our servers');
     };
 });
 
@@ -51,8 +87,8 @@ const uploadChinpokomon = async chinpokomon => {
     });
     
     const result = await(res.json());
-    
-    console.log(result);
+
+    showFeedback(result.status, result.code);
 };
 
 form.addEventListener('submit', e => {
@@ -75,23 +111,6 @@ form.addEventListener('submit', e => {
     uploadChinpokomon(chinpokomon);
 });
 
-const getChinpokomon = async () => {
-    const res = await fetch('/chinpokomon-read', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            parcel: 'give me chinpokomon'
-        })
-    });
-    
-    const result = await(res.json());
-    
-    const parsed = JSON.parse(result.chinpokomon);
-
-    console.log(parsed.picture);
-    dropZone.style.backgroundImage = `url(${parsed.picture})`;
-};
-
-getChinpokomon();
+const urlLocation = location.toString();
+const username = urlLocation.slice(urlLocation.indexOf('/home/') + 6, urlLocation.length);
+getChinpokomons(username, 0);

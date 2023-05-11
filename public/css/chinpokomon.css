@@ -7,12 +7,8 @@
     src: url('/fonts/Arizonia-Regular.ttf');
 }
 
-.main {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    margin: 0px;
-    margin-top: 25px;
+body {
+    z-index: -1;
 }
 
 .chinpokomonGrid {
@@ -25,7 +21,7 @@
     padding-right: 25vw;
 }
 
-.chinpokomonGrid > div:not(:last-child) {
+.chinpokomonGrid, .chinpokomonGrid > div {
     margin-bottom: 3em;
 }
 
@@ -35,33 +31,58 @@
     display: grid; 
     grid-template-columns: 1fr 1.4fr; 
     grid-template-rows: 0.5fr 1.5fr; 
-    gap: 0px 0px; 
+    gap: 0px 0px;
+    background-color: rgb(213, 225, 231);
     grid-template-areas: 
         "imgGrid nameGrid"
         "imgGrid abilityGrid";
-    background-color: rgb(213, 225, 231);
-    box-shadow: 0.5em 0.5em 0.5em rgb(145, 145, 145);
+    box-shadow: 0.5vw 0.5vw 0.5vw rgb(145, 145, 145);
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-.imgGrid { 
+.createGrid > div {
+    background-color: rgb(213, 231, 213) !important;
+}
+
+.createGrid {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+}
+
+.imgGrid {
+    display: grid;
     grid-area: imgGrid;
-    /* background-color: rgb(121, 160, 121); */
+    z-index: 10;
     overflow: hidden;
     margin: 10%;
  }
 
 .imgGrid > div {
+    display: grid;
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center;  
+    background-position: center;
+    z-index: 10;
+}
+
+.imgGrid > div > p {
+    font-size: 1.5vw;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    z-index: -5;
+}
+
+.drop {
+    background-color: rgba(128, 128, 128, 0.616);
+    border: .5vw black dashed;
 }
 
  .nameGrid { 
     display: grid;
     grid-area: nameGrid;
-    /* background-color: rgb(113, 126, 165); */
  }
 
  .nameGrid > h3 {
@@ -71,10 +92,18 @@
     font-size: 2.5vw;
  }
 
+ .nameGrid > input {
+    align-self: center;
+    margin-top: 0.4em;
+    margin-left: 0.2em;
+    font-size: 2.5vw;
+    width: 90%;
+ }
+
  .abilityGrid {
     grid-area: abilityGrid;
-    /* background-color: rgb(67, 148, 67); */
     padding-left: 0.5em;
+    width: auto
  }
 
  .abilityGrid > h2 {
@@ -83,11 +112,12 @@
  }
 
  .abilityGrid > ul { 
+    display: grid;
     list-style: none;
+    width: 90%
  }
 
  .abilityGrid > ul > li {
-    display: grid;  
     font-size: 1.5vw;
     margin-top: .5vw;
  }
@@ -101,4 +131,47 @@
     justify-self: end;
     padding-right: 2vw;
     padding-bottom: .4vw;
- }
+}
+
+.abilityInputs > li {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.abilityInputs > li > input {
+    width: 100%;
+    height: 1.5vw;
+    align-self: center;
+    font-size: 1vw;
+}
+
+.abilityInputs > li > p {
+    width: 10%;
+    height: fit-content;
+}
+
+#submitChinpokomon {
+    align-self: center;
+    justify-self: center;
+    font-size: 1vw;
+    border-radius: 0;
+    border-style: none;
+    background-color: rgb(226, 226, 226);;
+    width: 50%;
+    height: 3vw;
+    box-shadow: 0.3vw 0.3vw 0.3vw rgb(145, 145, 145);
+    margin: .2vw;
+}
+
+#feedBackText {
+    font-size: 1vw;
+    text-align: center;
+    margin: .2vw;
+
+}
+
+.hidden {
+    display: none; 
+}

@@ -62,8 +62,6 @@ module.exports.user_create = async (req, res) => {
                 // logg brukeren inn
                 const token = createToken(document._id.toString());
 
-                console.log(token);
-
                 res.cookie('jwt', token, {
                     sameSite: 'strict',
                     httpOnly: true,
@@ -97,8 +95,6 @@ module.exports.user_login = async (req, res) => {
 
         if (auth) {
             const token = createToken(dbUser._id.toString());
-
-            console.log(token);
 
             res.cookie('jwt', token, {
                 sameSite: 'strict',

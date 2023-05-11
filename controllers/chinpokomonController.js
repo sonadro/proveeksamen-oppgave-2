@@ -7,59 +7,69 @@ module.exports.chinpokomon_create = async (req, res) => {
 
     const document = new Chinpokomon(chinpokomon);
 
-    try {
-        document.save();
-    } catch(err) {
-        console.error(err);
+    // sjekk om alle felter eksisterer
+    if (document.name.length < 3) {
+        res.status(400).send({
+            status: 'Navnet til Chinpokomonen må være minst 3 tegn',
+            code: 'userErr'
+        });
+    } else if (document.ability1.length < 2 || document.ability2.length < 2 || document.ability3.length < 2) {
+        res.status(400).send({
+            status: 'Chinpokomonen må ha 3 egenskaper',
+            code: 'userErr'
+        });
+    } else if (!document.picture) {
+        res.status(400).send({
+            status: 'Du må laste opp et bilde til Chinpokomonen!',
+            code: 'userErr'
+        });
+    } else {
+        try {
+            document.save();
+            res.status(200).send({
+                status: 'Chinpokomonen ble lagret',
+                code: 'ok'
+            });
+        } catch(err) {
+            console.error(err);
+            res.status(400).send({
+                status: 'Det skjedde en feil når Chinpokomonen skulle lagres. Prøv igjen senere',
+                code: 'serverErr'
+            });
+        };
     };
 };
 
 module.exports.chinpokomon_read = async (req, res) => {
-    const chinpokomon = await Chinpokomon.findOne({ });
+    let info = req.body;
 
-    res.status(200).send({
-        chinpokomon: JSON.stringify(chinpokomon)
-    });
-};
+    let chinpokomons
 
-module.exports.chinpokomon_landingPage_read = async (req, res) => {
-    const chinpokomons = await Chinpokomon.aggregate([
-        {
-          '$sort': {
-            'createdAt': -1
-          }
-        }, {
-          '$limit': 5
-        }
-      ]);
+    if (info.limit === 0) {
+        chinpokomons = await Chinpokomon.aggregate([
+            {
+                '$sort': {
+                    'createdAt': -1
+                }
+            }, {
+                '$match': {
+                    'authorName': info.username
+                }
+            }
+        ]);
+    } else {
+        chinpokomons = await Chinpokomon.aggregate([
+            {
+                '$sort': {
+                    'createdAt': -1
+                }
+            }, {
+                '$limit': 10
+            }
+        ]);
+    };
 
     res.status(200).send({
         chinpokomons: JSON.stringify(chinpokomons)
     });
-};
-
-module.exports.chinpokomon_user_get = async (req, res) => {
-    const username = req.body.username;
-
-    const userChinpokomons = await Chinpokomon.aggregate([
-      {
-        '$match': {
-          'authorName':  username
-        }
-      }, {
-        '$sort': {
-          'createdAt': -1
-        }
-      }
-    ]);
-
-    if (userChinpokomons.length) {
-        res.status(200).send({
-            chinpokomons: JSON.stringify(userChinpokomons)
-        });
-    } else {
-        res.status(200).send({
-            feedback: 'Denne brukeren har ingen Chinpokomons :('
-        });
-    };
 };
