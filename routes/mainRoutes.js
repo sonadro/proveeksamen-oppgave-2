@@ -18,4 +18,7 @@ router.get('/nouser/:username', loggedInCheck, mainController.nouser_get);
 router.get('/home', loggedInCheck, userHomeCheck, mainController.userHome_get);
 router.get('/home/:username', loggedInCheck, userHomeCheck, mainController.userHome_get);
 
+// guide
+router.get('/guide', loggedInCheck, mainController.guide_get);
+
 module.exports = router;

@@ -45,3 +45,7 @@ module.exports.nouser_get = async (req, res) => {
         res.render('nouser', { title: 'Ugyldig bruker', username });
     };
 };
+
+module.exports.guide_get = async (req, res) => {
+    res.render('guide', { title: 'Guide'});
+};
