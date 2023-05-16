@@ -18,8 +18,8 @@ const getChinpokomons = async (username, limit) => {
 
     parsed.forEach(chinpokomon => {
         const template = `
-        <div class="chinpokomonCard" id="${chinpokomon._id}">
-            <div class="nameGrid"><h3>${chinpokomon.name}</h3></div>
+        <div class="chinpokomonCard">
+            <div class="nameGrid"><h3 class="openPopup" id="${chinpokomon._id}">${chinpokomon.name}</h3></div>
             <div class="imgGrid"><div style="background-image: url(${chinpokomon.picture});"></div></div>
             <div class="abilityGrid">
                 <h2>Abilities:</h2>
